@@ -66,10 +66,6 @@ Menu {
         }
     }
 
-    Component.onCompleted: {
-        menuListView.itemAtIndex(0)?.forceActiveFocus();
-    }
-
     contentItem: Item {
         implicitWidth: menuListView.implicitWidth
         implicitHeight: menuListView.implicitHeight
@@ -95,5 +91,6 @@ Menu {
 
     delegate: WMenuItem {
         id: menuItemDelegate
+        width: ListView.view?.width
     }
 }

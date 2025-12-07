@@ -5,7 +5,6 @@ import qs.modules.common
 import qs.modules.waffle.looks
 import qs.modules.common.functions
 import qs.modules.common.models
-import qs.modules.waffle.startMenu
 import Quickshell
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -120,7 +119,7 @@ RowLayout {
         onModelChanged: {
             root.focusFirstItem();
         }
-        delegate: SearchResultButton {
+        delegate: WSearchResultButton {
             required property int index
             required property var modelData
             entry: modelData
@@ -190,7 +189,6 @@ RowLayout {
                     const isAppEntry = resultPreview.entry.type === Translation.tr("App");
                     const appId = isAppEntry ? resultPreview.entry.id : "";
                     const pinned = isAppEntry ? (Config.options.dock.pinnedApps.includes(appId)) : false;
-                    const startPinned = isAppEntry ? (Config.options.launcher.pinnedApps.includes(appId)) : false;
                     var result = [
                         searchResultComp.createObject(null, {
                             name: resultPreview.entry.verb,
@@ -202,16 +200,6 @@ RowLayout {
                         }),
                         ...(isAppEntry ? [
                             searchResultComp.createObject(null, {
-                                name: startPinned ? Translation.tr("Unpin from Start") : Translation.tr("Pin to Start"),
-                                iconName: startPinned ? "keep_off" : "keep",
-                                iconType: LauncherSearchResult.IconType.Material,
-                                execute: () => {
-                                    LauncherApps.togglePin(appId);
-                                }
-                            })
-                        ] : []),
-                        ...(isAppEntry ? [
-                            searchResultComp.createObject(null, {
                                 name: pinned ? Translation.tr("Unpin from taskbar") : Translation.tr("Pin to taskbar"),
                                 iconName: pinned ? "keep_off" : "keep",
                                 iconType: LauncherSearchResult.IconType.Material,
@@ -219,7 +207,7 @@ RowLayout {
                                     TaskbarApps.togglePin(appId);
                                 }
                             })
-                        ] : []),
+                        ] : [])
                     ];
                     result = result.concat(resultPreview.entry.actions);
                     return result;

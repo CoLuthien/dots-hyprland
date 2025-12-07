@@ -87,16 +87,38 @@ Item {
         }
     }
 
-    VerticalPageIndicator {
+    Column {
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 6
-        
-        currentIndex: root.currentPage
-        count: root.pages
-        onClicked: (index) => root.currentPage = index
-        onIncreasePage: root.increasePage();
-        onDecreasePage: root.decreasePage();
+        spacing: 6
+
+        NavigationArrow {
+            down: false
+        }
+
+        Repeater {
+            model: root.pages
+            delegate: MouseArea {
+                id: pageIndicator
+                required property int index
+                hoverEnabled: true
+                onClicked: root.currentPage = index
+                anchors.horizontalCenter: parent.horizontalCenter
+                implicitWidth: 6
+                implicitHeight: 6
+
+                Circle {
+                    anchors.centerIn: parent
+                    diameter: (index === root.currentPage || pageIndicator.containsMouse) && !pageIndicator.pressed ? 6 : 4
+                    color: pageIndicator.containsMouse ? Looks.colors.controlBgHover : Looks.colors.controlBg
+                }
+            }
+        }
+
+        NavigationArrow {
+            down: true
+        }
     }
 
     FocusedScrollMouseArea {
@@ -104,7 +126,25 @@ Item {
         anchors.fill: parent
         acceptedButtons: Qt.NoButton
         hoverEnabled: false
-        onScrollUp: root.decreasePage();
-        onScrollDown: root.increasePage();
+        onScrollUp: decreasePage();
+        onScrollDown: increasePage();
+    }
+
+    component NavigationArrow: FluentIcon {
+        id: navArrow
+        required property bool down
+        anchors.horizontalCenter: parent.horizontalCenter
+        implicitHeight: 12
+        implicitWidth: 12 - (2 * upArea.containsPress)
+        icon: down ? "caret-down" : "caret-up"
+        color: upArea.containsMouse ? Looks.colors.controlBgHover : Looks.colors.controlBg
+        filled: true
+        opacity: ((down && root.currentPage < root.pages - 1) || (!down && root.currentPage > 0)) ? 1 : 0
+        MouseArea {
+            id: upArea
+            anchors.fill: parent
+            hoverEnabled: true
+            onClicked: navArrow.down ? root.increasePage() : root.decreasePage();
+        }
     }
 }

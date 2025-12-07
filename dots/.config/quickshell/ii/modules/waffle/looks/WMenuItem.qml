@@ -55,9 +55,6 @@ MenuItem {
     rightInset: inset
     horizontalPadding: 11
 
-    width: ListView.view?.width
-    height: visible ? implicitHeight : 0
-
     background: Rectangle {
         id: backgroundRect
         radius: Looks.radius.medium

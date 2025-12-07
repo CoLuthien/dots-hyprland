@@ -288,7 +288,12 @@ PanelWindow {
                 snipProc.command = ["bash", "-c", `${cropInPlace} && xdg-open "${root.imageSearchEngineBaseUrl}$(${uploadAndGetUrl(root.screenshotPath)})" && ${cleanup}`]
                 break;
             case RegionSelection.SnipAction.CharRecognition:
-                snipProc.command = ["bash", "-c", `${cropInPlace} && tesseract '${StringUtils.shellSingleQuoteEscape(root.screenshotPath)}' stdout -l $(tesseract --list-langs | awk 'NR>1{print $1}' | tr '\\n' '+' | sed 's/\\+$/\\n/') | wl-copy && ${cleanup}`]
+                snipProc.command = ["bash", "-c", `${cropInPlace} && \
+                    langs=$(tesseract --list-langs 2>/dev/null | awk 'NR>1{print $1}'); \
+                    lang_list=$(echo "$langs" | tr '\\n' '+' | sed 's/\\+$/\\n/'); \
+                    if echo "$langs" | grep -qx "kor"; then lang_list="kor+eng"; fi; \
+                    [ -z "$lang_list" ] && lang_list="eng"; \
+                    tesseract '${StringUtils.shellSingleQuoteEscape(root.screenshotPath)}' stdout -l "$lang_list" | wl-copy && ${cleanup}`]
                 break;
             case RegionSelection.SnipAction.Record:
                 snipProc.command = ["bash", "-c", `${Directories.recordScriptPath} --region '${slurpRegion}'`]
