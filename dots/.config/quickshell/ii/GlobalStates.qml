@@ -30,6 +30,7 @@ Singleton {
     property bool wallpaperSelectorOpen: false
     property bool workspaceShowNumbers: false
     property bool appLauncherOpen: false
+    property bool dropdownTerminalOpen: false
 
     onSidebarRightOpenChanged: {
         if (GlobalStates.sidebarRightOpen) {

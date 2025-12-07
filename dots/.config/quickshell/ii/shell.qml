@@ -13,6 +13,7 @@ import qs.modules.ii.background
 import qs.modules.ii.bar
 import qs.modules.ii.cheatsheet
 import qs.modules.ii.dock
+import qs.modules.ii.dropdownTerminal
 import qs.modules.ii.lock
 import qs.modules.ii.mediaControls
 import qs.modules.ii.notificationPopup
@@ -65,6 +66,7 @@ ShellRoot {
     PanelLoader { identifier: "iiBackground"; component: Background {} }
     PanelLoader { identifier: "iiCheatsheet"; component: Cheatsheet {} }
     PanelLoader { identifier: "iiDock"; extraCondition: Config.options.dock.enable; component: Dock {} }
+    PanelLoader { identifier: "iiDropdownTerminal"; component: DropdownTerminal {} }
     PanelLoader { identifier: "iiLock"; component: Lock {} }
     PanelLoader { identifier: "iiMediaControls"; component: MediaControls {} }
     PanelLoader { identifier: "iiNotificationPopup"; component: NotificationPopup {} }
@@ -98,8 +100,8 @@ ShellRoot {
     // Panel families
     property list<string> families: ["ii", "waffle"]
     property var panelFamilies: ({
-        "ii": ["iiAppLauncher", "iiBar", "iiBackground", "iiCheatsheet", "iiDock", "iiLock", "iiMediaControls", "iiNotificationPopup", "iiOnScreenDisplay", "iiOnScreenKeyboard", "iiOverlay", "iiOverview", "iiPolkit", "iiRegionSelector", "iiReloadPopup", "iiScreenCorners", "iiSessionScreen", "iiSidebarLeft", "iiSidebarRight", "iiVerticalBar", "iiWallpaperSelector"],
-        "waffle": ["wActionCenter", "wBar", "wBackground", "wNotificationCenter", "wOnScreenDisplay", "wStartMenu", "iiAppLauncher", "iiCheatsheet", "iiLock", "iiNotificationPopup", "iiOnScreenKeyboard", "iiOverlay", "iiPolkit", "iiRegionSelector", "iiReloadPopup", "iiScreenCorners", "iiSessionScreen", "iiWallpaperSelector"],
+        "ii": ["iiAppLauncher", "iiBar", "iiBackground", "iiCheatsheet", "iiDock", "iiDropdownTerminal", "iiLock", "iiMediaControls", "iiNotificationPopup", "iiOnScreenDisplay", "iiOnScreenKeyboard", "iiOverlay", "iiOverview", "iiPolkit", "iiRegionSelector", "iiReloadPopup", "iiScreenCorners", "iiSessionScreen", "iiSidebarLeft", "iiSidebarRight", "iiVerticalBar", "iiWallpaperSelector"],
+        "waffle": ["wActionCenter", "wBar", "wBackground", "wNotificationCenter", "wOnScreenDisplay", "wStartMenu", "iiAppLauncher", "iiCheatsheet", "iiDropdownTerminal", "iiLock", "iiNotificationPopup", "iiOnScreenKeyboard", "iiOverlay", "iiPolkit", "iiRegionSelector", "iiReloadPopup", "iiScreenCorners", "iiSessionScreen", "iiWallpaperSelector"],
     })
     function cyclePanelFamily() {
         const currentIndex = families.indexOf(Config.options.panelFamily)
