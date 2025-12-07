@@ -12,11 +12,13 @@ Item {
     required property var scopeRoot
     property int sidebarPadding: 10
     anchors.fill: parent
+    property bool pythonEnabled: true
     property bool aiChatEnabled: Config.options.policies.ai !== 0
     property bool translatorEnabled: Config.options.sidebar.translator.enable
     property bool animeEnabled: Config.options.policies.weeb !== 0
     property bool animeCloset: Config.options.policies.weeb === 2
     property var tabButtonList: [
+        ...(root.pythonEnabled ? [{"icon": "terminal", "name": "Python"}] : []),
         ...(root.aiChatEnabled ? [{"icon": "neurology", "name": Translation.tr("Intelligence")}] : []),
         ...(root.translatorEnabled ? [{"icon": "translate", "name": Translation.tr("Translator")}] : []),
         ...((root.animeEnabled && !root.animeCloset) ? [{"icon": "bookmark_heart", "name": Translation.tr("Anime")}] : [])
@@ -83,6 +85,7 @@ Item {
                 }
 
                 contentChildren: [
+                    ...(root.pythonEnabled ? [pythonInterpreter.createObject()] : []),
                     ...((root.aiChatEnabled || (!root.translatorEnabled && !root.animeEnabled)) ? [aiChat.createObject()] : []),
                     ...(root.translatorEnabled ? [translator.createObject()] : []),
                     ...(root.animeEnabled ? [anime.createObject()] : [])
@@ -90,6 +93,10 @@ Item {
             }
         }
 
+        Component {
+            id: pythonInterpreter
+            PythonInterpreter {}
+        }
         Component {
             id: aiChat
             AiChat {}
