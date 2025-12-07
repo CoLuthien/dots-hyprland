@@ -13,6 +13,11 @@ Scope {
     property bool terminalLaunched: false
     property bool shouldRun: true
 
+    // Cleanup any existing dropdown terminal on startup
+    Component.onCompleted: {
+        Quickshell.execDetached(["hyprctl", "dispatch", "closewindow", "class:^(dropdown-terminal)$"])
+    }
+
     // Terminal process - launched once and kept alive
     Process {
         id: terminalProcess
