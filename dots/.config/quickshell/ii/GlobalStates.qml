@@ -10,6 +10,7 @@ pragma ComponentBehavior: Bound
 Singleton {
     id: root
     property bool barOpen: true
+    property bool clipboardWidgetOpen: false
     property bool crosshairOpen: false
     property bool sidebarLeftOpen: false
     property bool sidebarRightOpen: false
@@ -68,6 +69,6 @@ Singleton {
 
         function zoomOut() {
             screenZoom = Math.max(screenZoom - 0.4, 1)
-        } 
+        }
 	}
 }

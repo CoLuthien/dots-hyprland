@@ -1,0 +1,6 @@
+module qs.modules.ii.clipboardWidget
+
+ClipboardWidget 1.0 ClipboardWidget.qml
+ClipboardWidgetWindow 1.0 ClipboardWidgetWindow.qml
+ClipboardWidgetContent 1.0 ClipboardWidgetContent.qml
+ClipboardItem 1.0 ClipboardItem.qml
