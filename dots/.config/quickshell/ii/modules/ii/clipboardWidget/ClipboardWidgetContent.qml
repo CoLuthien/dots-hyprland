@@ -23,7 +23,8 @@ Item {
         function onClipboardWidgetOpenChanged() {
             if (GlobalStates.clipboardWidgetOpen) {
                 Cliphist.refresh();
-                // Force focus on search field when widget opens
+                // Clear search and force focus on search field when widget opens
+                searchField.text = "";
                 searchField.forceActiveFocus();
             }
         }
