@@ -15,6 +15,7 @@ Singleton {
     property string pressPasteCommand: "ydotool key -d 1 29:1 47:1 47:0 29:0"
     property bool sloppySearch: Config.options?.search.sloppy ?? false
     property real scoreThreshold: 0.2
+    property int maxEntries: 500  // Maximum number of clipboard entries to keep (LRU policy)
     property list<string> entries: []
     readonly property var preparedEntries: entries.map(a => ({
         name: Fuzzy.prepare(`${a.replace(/^\s*\S+\s+/, "")}`),
@@ -140,7 +141,8 @@ Singleton {
 
         onExited: (exitCode, exitStatus) => {
             if (exitCode === 0) {
-                root.entries = readProc.buffer
+                // Apply LRU policy: keep only the most recent maxEntries items
+                root.entries = readProc.buffer.slice(0, root.maxEntries)
             } else {
                 console.error("[Cliphist] Failed to refresh with code", exitCode, "and status", exitStatus)
             }
