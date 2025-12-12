@@ -161,7 +161,15 @@ Item {
                         Component.onCompleted: forceActiveFocus()
 
                         Keys.onPressed: event => {
-                            if (event.key === Qt.Key_Down) {
+                            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                // Select first entry when Enter is pressed in search field
+                                if (clipboardList.count > 0) {
+                                    const firstEntry = clipboardModel.values[0];
+                                    Cliphist.copy(firstEntry);
+                                    GlobalStates.clipboardWidgetOpen = false;
+                                }
+                                event.accepted = true;
+                            } else if (event.key === Qt.Key_Down) {
                                 if (clipboardList.count > 0) {
                                     clipboardList.forceActiveFocus();
                                     clipboardList.currentIndex = 0;
